@@ -15,7 +15,28 @@
 
 
 
-<script id="jsbin-source-javascript" type="text/source-javascript">// console.clear()
+<!--boot js--><script id="jsbin-javascript" defer>function capturePreview(id, value, preview) {
+  var detail = { id: id, value: preview != null ? JSON.stringify(preview) : value };if (preview !== null) {
+    // eslint-disable-next-line no-restricted-globals
+    self.dispatchEvent(new CustomEvent('preview', { detail: detail }));
+  }return value;
+}
+const today = new Date();
+const target = capturePreview(1, new Date(`${today.getFullYear()}-12-25 00:00:00`), undefined); // ?
 
+const toDays = ms => ms / 1000 / 60 / 60 / 24;
+
+const days = capturePreview(5, toDays(target - today), undefined); // ?
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQuanMiXSwibmFtZXMiOlsiY2FwdHVyZVByZXZpZXciLCJpZCIsInZhbHVlIiwicHJldmlldyIsImRldGFpbCIsIkpTT04iLCJzdHJpbmdpZnkiLCJzZWxmIiwiZGlzcGF0Y2hFdmVudCIsIkN1c3RvbUV2ZW50IiwidG9kYXkiLCJEYXRlIiwidGFyZ2V0IiwiZ2V0RnVsbFllYXIiLCJ0b0RheXMiLCJtcyIsImRheXMiXSwibWFwcGluZ3MiOiJBQUFBLFNBQVNBLGNBQVQsQ0FBd0JDLEVBQXhCLEVBQTRCQyxLQUE1QixFQUFtQ0MsT0FBbkMsRUFBNEM7QUFDMUMsTUFBSUMsU0FBUyxFQUNYSCxJQUFJQSxFQURPLEVBRVhDLE9BQU9DLFdBQVcsSUFBWCxHQUFrQkUsS0FBS0MsU0FBTCxDQUFlSCxPQUFmLENBQWxCLEdBQTRDRCxLQUZ4QyxFQUFiLENBS0EsSUFBSUMsWUFBWSxJQUFoQixFQUFzQjtBQUNwQjtBQUNBSSxTQUFLQyxhQUFMLENBQW1CLElBQUlDLFdBQUosQ0FBZ0IsU0FBaEIsRUFBMkIsRUFBRUwsUUFBUUEsTUFBVixFQUEzQixDQUFuQjtBQUNELEdBQ0QsT0FBT0YsS0FBUDtBQUNEO0FBWEQsTUFBTVEsUUFBUSxJQUFJQyxJQUFKLEVBQWQ7QUFDQSxNQUFNQywyQkFBUyxJQUFJRCxJQUFKLENBQVUsR0FBRUQsTUFBTUcsV0FBTixFQUFvQixpQkFBaEMsQ0FBVCxZQUFOLEMsQ0FBaUU7O0FBRWpFLE1BQU1DLFNBQVNDLE1BQU1BLEtBQUssSUFBTCxHQUFZLEVBQVosR0FBaUIsRUFBakIsR0FBc0IsRUFBM0M7O0FBRUEsTUFBTUMseUJBQU9GLE9BQU9GLFNBQVNGLEtBQWhCLENBQVAsWUFBTixDLENBQXFDIiwiZmlsZSI6InVua25vd24iLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCB0b2RheSA9IG5ldyBEYXRlKCk7XG5jb25zdCB0YXJnZXQgPSBuZXcgRGF0ZShgJHt0b2RheS5nZXRGdWxsWWVhcigpfS0xMi0yNSAwMDowMDowMGApOy8vID9cblxuY29uc3QgdG9EYXlzID0gbXMgPT4gbXMgLyAxMDAwIC8gNjAgLyA2MCAvIDI0O1xuXG5jb25zdCBkYXlzID0gdG9EYXlzKHRhcmdldCAtIHRvZGF5KTsgLy8gPyAiXX0=
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/source-javascript">const today = new Date();
+const target = new Date(`${today.getFullYear()}-12-25 00:00:00`);// ?
+
+const toDays = ms => ms / 1000 / 60 / 60 / 24;
+
+const days = toDays(target - today); // ? 
 </script></body>
 </html>
