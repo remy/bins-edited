@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/dev-fetch"></script>
+<style id="jsbin-css">
+* {
+  font-family: georgia, times, sans-serif;
+}
+
+body {
+  margin: 0 40px;
+}
+
+.review {
+  border: 1px solid #999;
+  padding: 20px;
+  margin-bottom: 60px;
+  max-width: 60ch;
+}
+
+.meta {
+  color: #999;
+}
+
+h2 {
+  line-height: 2rem;
+}
+
+hr {
+  margin-bottom: 40px;
+  border-bottom: 0;
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>Goodreads Reviews</h1>
+
+  <section v-if="errored">
+    <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+  </section>
+
+  <section v-else>
+    <div v-if="loading">Loading...</div>
+
+    <div
+      v-else
+      v-for="review in info"
+      class="currency"
+    >
+      <h2>
+        {{ review.book.title }}
+      </h2>
+      <h3>
+        By {{ review.book.author }}
+      </h3>
+      <div class="meta">
+        <p>
+          Rating {{ review.rating }}/5 &bullet; Read in {{ review.duration }} on {{ review.read_at | formatDate}}.
+        </p>
+      </div>
+      <div class="review" v-html="review.review">
+      </div>
+    </div>
+
+  </section>
+</div>
+<!--boot js--><script id="jsbin-javascript" defer>function capturePreview(id, value, preview) {
+  var detail = { id: id, value: preview != null ? JSON.stringify(preview) : value };if (preview !== null) {
+    // eslint-disable-next-line no-restricted-globals
+    self.dispatchEvent(new CustomEvent('preview', { detail: detail }));
+  }return value;
+}
+const months = 'Jan Fed Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+
+Vue.filter('formatDate', function (value) {
+  const d = new Date(value);
+  return `${d.getDate()}-${months[d.getMonth()]} ${d.getFullYear()}`;
+});
+
+const app = new Vue({
+  el: '#app',
+  data() {
+    return {
+      loading: true,
+      info: null,
+      errored: false
+    };
+  },
+  async mounted() {
+    try {
+      const res = await fetch('http://localhost:3000/reviews', {
+        credentials: 'include',
+        mode: 'cors'
+      });
+      const json = await res.json();
+      this.info = json;
+      this.loading = false;
+    } catch (e) {
+      console.log(e);
+      this.errored = true;
+    }
+  }
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJsYWNrLWxlYWYtRjY3LmpzIl0sIm5hbWVzIjpbImNhcHR1cmVQcmV2aWV3IiwiaWQiLCJ2YWx1ZSIsInByZXZpZXciLCJkZXRhaWwiLCJKU09OIiwic3RyaW5naWZ5Iiwic2VsZiIsImRpc3BhdGNoRXZlbnQiLCJDdXN0b21FdmVudCIsIm1vbnRocyIsInNwbGl0IiwiVnVlIiwiZmlsdGVyIiwiZCIsIkRhdGUiLCJnZXREYXRlIiwiZ2V0TW9udGgiLCJnZXRGdWxsWWVhciIsImFwcCIsImVsIiwiZGF0YSIsImxvYWRpbmciLCJpbmZvIiwiZXJyb3JlZCIsIm1vdW50ZWQiLCJyZXMiLCJmZXRjaCIsImNyZWRlbnRpYWxzIiwibW9kZSIsImpzb24iLCJlIiwiY29uc29sZSIsImxvZyJdLCJtYXBwaW5ncyI6IkFBQUEsU0FBU0EsY0FBVCxDQUF3QkMsRUFBeEIsRUFBNEJDLEtBQTVCLEVBQW1DQyxPQUFuQyxFQUE0QztBQUMxQyxNQUFJQyxTQUFTLEVBQ1hILElBQUlBLEVBRE8sRUFFWEMsT0FBT0MsV0FBVyxJQUFYLEdBQWtCRSxLQUFLQyxTQUFMLENBQWVILE9BQWYsQ0FBbEIsR0FBNENELEtBRnhDLEVBQWIsQ0FLQSxJQUFJQyxZQUFZLElBQWhCLEVBQXNCO0FBQ3BCO0FBQ0FJLFNBQUtDLGFBQUwsQ0FBbUIsSUFBSUMsV0FBSixDQUFnQixTQUFoQixFQUEyQixFQUFFTCxRQUFRQSxNQUFWLEVBQTNCLENBQW5CO0FBQ0QsR0FDRCxPQUFPRixLQUFQO0FBQ0Q7QUFYRCxNQUFNUSxTQUFTLGtEQUFrREMsS0FBbEQsQ0FBd0QsR0FBeEQsQ0FBZjs7QUFFQUMsSUFBSUMsTUFBSixDQUFXLFlBQVgsRUFBeUIsVUFBVVgsS0FBVixFQUFpQjtBQUN4QyxRQUFNWSxJQUFJLElBQUlDLElBQUosQ0FBU2IsS0FBVCxDQUFWO0FBQ0EsU0FBUSxHQUFFWSxFQUFFRSxPQUFGLEVBQVksSUFBR04sT0FBT0ksRUFBRUcsUUFBRixFQUFQLENBQXFCLElBQUdILEVBQUVJLFdBQUYsRUFBZ0IsRUFBakU7QUFDRCxDQUhEOztBQUtBLE1BQU1DLE1BQU0sSUFBSVAsR0FBSixDQUFRO0FBQ2xCUSxNQUFJLE1BRGM7QUFFbEJDLFNBQVE7QUFDTixXQUFPO0FBQ0xDLGVBQVMsSUFESjtBQUVMQyxZQUFNLElBRkQ7QUFHTEMsZUFBUztBQUhKLEtBQVA7QUFLRCxHQVJpQjtBQVNsQixRQUFNQyxPQUFOLEdBQWlCO0FBQ2YsUUFBSTtBQUNGLFlBQU1DLE1BQU0sTUFBTUMsTUFBTSwrQkFBTixFQUF1QztBQUN2REMscUJBQWEsU0FEMEM7QUFFdkRDLGNBQU07QUFGaUQsT0FBdkMsQ0FBbEI7QUFJQSxZQUFNQyxPQUFPLE1BQU1KLElBQUlJLElBQUosRUFBbkI7QUFDQSxXQUFLUCxJQUFMLEdBQVlPLElBQVo7QUFDQSxXQUFLUixPQUFMLEdBQWUsS0FBZjtBQUNELEtBUkQsQ0FRRSxPQUFPUyxDQUFQLEVBQVU7QUFDVkMsY0FBUUMsR0FBUixDQUFZRixDQUFaO0FBQ0EsV0FBS1AsT0FBTCxHQUFlLElBQWY7QUFDRDtBQUNGO0FBdEJpQixDQUFSLENBQVoiLCJmaWxlIjoidW5rbm93biIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IG1vbnRocyA9ICdKYW4gRmVkIE1hciBBcHIgTWF5IEp1biBKdWwgQXVnIFNlcCBPY3QgTm92IERlYycuc3BsaXQoJyAnKTtcblxuVnVlLmZpbHRlcignZm9ybWF0RGF0ZScsIGZ1bmN0aW9uICh2YWx1ZSkge1xuICBjb25zdCBkID0gbmV3IERhdGUodmFsdWUpO1xuICByZXR1cm4gYCR7ZC5nZXREYXRlKCl9LSR7bW9udGhzW2QuZ2V0TW9udGgoKV19ICR7ZC5nZXRGdWxsWWVhcigpfWA7XG59KTtcblxuY29uc3QgYXBwID0gbmV3IFZ1ZSh7XG4gIGVsOiAnI2FwcCcsXG4gIGRhdGEgKCkge1xuICAgIHJldHVybiB7XG4gICAgICBsb2FkaW5nOiB0cnVlLFxuICAgICAgaW5mbzogbnVsbCxcbiAgICAgIGVycm9yZWQ6IGZhbHNlLFxuICAgIH1cbiAgfSxcbiAgYXN5bmMgbW91bnRlZCAoKSB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKCdodHRwOi8vbG9jYWxob3N0OjMwMDAvcmV2aWV3cycsIHtcbiAgICAgICAgY3JlZGVudGlhbHM6ICdpbmNsdWRlJyxcbiAgICAgICAgbW9kZTogJ2NvcnMnXG4gICAgICB9KTtcbiAgICAgIGNvbnN0IGpzb24gPSBhd2FpdCByZXMuanNvbigpO1xuICAgICAgdGhpcy5pbmZvID0ganNvbjtcbiAgICAgIHRoaXMubG9hZGluZyA9IGZhbHNlO1xuICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgIGNvbnNvbGUubG9nKGUpO1xuICAgICAgdGhpcy5lcnJvcmVkID0gdHJ1ZTtcbiAgICB9XG4gIH1cbn0pIl19
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/source-javascript">const months = 'Jan Fed Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+
+Vue.filter('formatDate', function (value) {
+  const d = new Date(value);
+  return `${d.getDate()}-${months[d.getMonth()]} ${d.getFullYear()}`;
+});
+
+const app = new Vue({
+  el: '#app',
+  data () {
+    return {
+      loading: true,
+      info: null,
+      errored: false,
+    }
+  },
+  async mounted () {
+    try {
+      const res = await fetch('http://localhost:3000/reviews', {
+        credentials: 'include',
+        mode: 'cors'
+      });
+      const json = await res.json();
+      this.info = json;
+      this.loading = false;
+    } catch (e) {
+      console.log(e);
+      this.errored = true;
+    }
+  }
+})
+</script></body>
+</html>
