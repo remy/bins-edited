@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="https://unpkg.com/memfetch@1.1.2/dist/index.js"></script>
+  <title>Spectrum mem visualiser</title>
+<style id="jsbin-css">
+pre {
+	font-family: 'Commodore-64-Angled', 'ZX-Spectrum', monospace;
+  letter-spacing: 0px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(204, 204, 204);
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 27px;
+  font-size: 24px;
+  
+  display: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+_body {
+  background: url(http://localhost:5000/old-tv.jpg) no-repeat center;
+  background-position: center;
+  background-size: 1248px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+/*   background: url(http://localhost:5000/old-tv.svg) no-repeat center; */
+  background-position: center;
+  background-size: 512px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: #fdfdfd;
+  background-image: linear-gradient(to bottom, #cfd9df 0%, #e2ebf0 100%);
+}
+
+canvas {
+	background: #fff;
+  border: 10px solid black;
+  display: block;
+  border-radius: 0px;
+
+  transform: scale(1);
+  image-rendering: pixelated;
+}
+</style>
+</head>
+<body>
+<canvas></canvas>
+  <script id="memory" type="memory">
+4000	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4008	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4010	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4018	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4020	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4028	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4030	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4038	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4040	DEFB $00,$00,$00,$00,$00,$00,$3F,$FF	
+4048	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF	
+4050	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF	
+4058	DEFB $FF,$FC,$00,$00,$00,$00,$00,$00	
+4060	DEFB $00,$00,$00,$00,$00,$00,$3C,$3F	
+4068	DEFB $FF,$FC,$3F,$C3,$FC,$00,$3C,$3F	
+4070	DEFB $C0,$03,$C3,$C0,$3F,$FC,$3F,$FF	
+4078	DEFB $FC,$3C,$00,$00,$00,$00,$00,$00	
+4080	DEFB $00,$00,$00,$00,$00,$00,$3C,$3C	
+4088	DEFB $00
+
+408C	DEFB $C0,$00,$00,$00,$03,$C0,$3F,$C3	
+4094	DEFB $FC,$3C,$3C,$00,$3C,$3C,$00,$00	
+409C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+40A4	DEFB $00,$00,$3C,$3F,$FF,$FC,$3F,$C0	
+40AC	DEFB $00,$3F,$C0,$00,$3F,$FC,$00,$00	
+40B4	DEFB $3F,$FC,$3F,$FF,$FC,$3C,$00,$00	
+40BC	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+40C4	DEFB $00,$00,$3F,$FF,$FF,$FF,$FF,$C0	
+40CC	DEFB $00,$3C,$3C,$03,$FF,$C3,$FF,$FC	
+40D4	DEFB $00,$3F,$FF,$FF,$FF,$FC,$00,$00	
+40DC	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+40E4	DEFB $00,$00,$3C,$03,$C3,$C3,$C3,$C0	
+40EC	DEFB $3F,$FC,$3C,$00,$03,$FF,$FC,$00	
+40F4	DEFB $3C,$03,$FC,$3C,$3F,$FC,$00,$00	
+40FC	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4104	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+410C	DEFB $00,$20,$00,$00,$00,$00,$00,$00	
+4114	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+411C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4124	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+412C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4134	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+413C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4144	DEFB $00,$00,$3F,$FF,$FF,$FF,$FF,$FF	
+414C	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF	
+4154	DEFB $FF,$FF,$FF,$FF,$FF,$FC,$00,$00	
+415C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4164	DEFB $00,$00,$3C,$3F,$FF,$FC,$3F,$C3	
+416C	DEFB $FC,$00,$3C,$3F,$C0,$03,$C3,$C0	
+4174	DEFB $3F,$FC,$3F,$FF,$FC,$3C,$00,$00	
+417C	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+4184	DEFB $00,$00,$3C,$3C,$00
+551A	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+5522	DEFB $00,$00,$00,$00,$3C,$00,$00,$00	
+552A	DEFB $3C,$3C,$00,$3F,$FF,$FF,$FC,$00	
+5532	DEFB $00,$3F,$FC,$FA,$3C,$00,$3C,$3C	
+553A	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+5542	DEFB $00,$00,$00,$00,$3C,$3C,$00,$3C	
+554A	DEFB $3C,$00,$3F,$FF,$C0,$00,$3F,$FF	
+5552	DEFB $C0,$3C,$00,$00,$00,$3F,$C0,$3C	
+555A	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+5562	DEFB $00,$00,$00,$00,$00,$F0,$F0,$00	
+556A	DEFB $F0,$FF,$0F,$0F,$FF,$0F,$F0,$0F	
+5572	DEFB $F0,$F0,$F0,$F0,$FF,$00,$0F,$00	
+557A	DEFB $F0,$00,$00,$00,$00,$00,$00,$00	
+5582	DEFB $00,$00,$00,$00,$3C,$00,$00,$00	
+558A	DEFB $3F,$C3,$C0,$00,$03,$C0,$3F,$C0	
+5592	DEFB $3C,$3F,$FC,$3F,$FF,$FF,$FC,$3C	
+559A	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55A2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55AA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55B2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55BA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55C2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55CA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55D2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55DA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55E2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55EA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55F2	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+55FA	DEFB $00,$00,$00,$00,$00,$00,$00,$00	
+5602	DEFB $00,$00,$00,$00	
+
+</script>
+<!--boot js--><script id="jsbin-javascript" defer>function capturePreview(id, value, preview) {
+  var detail = { id: id, value: preview != null ? JSON.stringify(preview) : value };if (preview !== null) {
+    // eslint-disable-next-line no-restricted-globals
+    self.dispatchEvent(new CustomEvent('preview', { detail: detail }));
+  }return value;
+}
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+const w = canvas.width = 256;
+const h = canvas.height = 192;
+
+function put(ctx, imageData, x, y) {
+  ctx.putImageData(imageData, x, y);
+}
+
+function block(index, byte) {
+  const third = index >> 11; // 0..2047, 2048..4095, 4096..6143
+  const imageData = new Uint8ClampedArray(4 * 8); // 1x8 pixel array
+
+  var _LP = Date.now();
+
+  for (let j = 7; j >= 0; j--) {
+    if (Date.now() - _LP > 100) {
+      (function (lineno, colno) {
+        var detail = { error: { name: 'loopProtect', stack: 'Use // noprotect to disable JS Bin\'s loop protection' }, lineno: lineno, custom: true, colno: colno, message: 'Exiting potential infinite loop on line ' + lineno }; // important: this code is run inside the runner - but it's assigned from the
+        // outer frame (Result)
+        // eslint-disable-next-line no-restricted-globals
+        self.dispatchEvent(new CustomEvent('error', { detail: detail }));
+      })(14, 2);
+
+      break;
+    }
+
+    // determines bit for i, based on MSb
+    const bit = (byte & 1 << j) === 0 ? 0 : 255;
+    imageData.set([bit, bit, bit, 255], (7 - j) * 4); // place the bits forward
+  }
+
+  const x = index % 32;
+  const y = (index >> 5) * 8 % 64 + third * 56; // this is the y coord
+  const offset = index >> 8;
+
+  put(ctx, new ImageData(imageData, 8, 1), x * 8, y + offset);
+}
+
+// 32 bytes on 192 rows
+
+
+function drawMemory(memory) {
+  memory.map((line, i) => {
+    line.bytes.map((byte, i) => {
+      block(line.address + i - 0x4000, byte);
+    });
+  });
+}
+
+async function getData() {
+  const res = await fetch('http://localhost:53107/bander-memory.tap');
+  const data = await res.arrayBuffer();
+
+  console.log('worked', data.byteLength);
+
+  const bytes = Array.from(data).reduce((acc, curr, i) => {
+    if (!acc[acc.length - 1].bytes) {
+      acc[acc.length - 1] = { bytes: [], address: 0x4000 + i };
+    }
+
+    if (i % 8 !== 0) {
+      acc[acc.length - 1].bytes.push(curr);
+    }
+
+    return acc;
+  }, []);
+
+  drawMemory(bytes);
+}
+
+function parse(data) {
+  const lines = data.split('\n').map(_ => _.replace(/;.*$/, '').trim()) // remove comments
+  .filter(Boolean) // strip empty lines
+  .map(line => {
+    const [address, cmd, memory] = line.split(/\s+/);
+
+    const bytes = memory.split(',').map(_ => parseInt(_.substring(1), 16));
+
+    return {
+      address: parseInt(address.replace(/^b/, ''), 16),
+      bytes
+    };
+  });
+
+  return capturePreview(74, lines, (() => {
+    try {
+      return lines[0];
+    } catch (e) {}return null;
+  })()); //? lines[0]
+}
+
+// const data = parse(document.querySelector('#memory').innerText.trim());
+
+// drawMemory(data);
+getData();
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVudGl0bGVkLmpzIl0sIm5hbWVzIjpbImNhcHR1cmVQcmV2aWV3IiwiaWQiLCJ2YWx1ZSIsInByZXZpZXciLCJkZXRhaWwiLCJKU09OIiwic3RyaW5naWZ5Iiwic2VsZiIsImRpc3BhdGNoRXZlbnQiLCJDdXN0b21FdmVudCIsImNhbnZhcyIsImRvY3VtZW50IiwicXVlcnlTZWxlY3RvciIsImN0eCIsImdldENvbnRleHQiLCJ3Iiwid2lkdGgiLCJoIiwiaGVpZ2h0IiwicHV0IiwiaW1hZ2VEYXRhIiwieCIsInkiLCJwdXRJbWFnZURhdGEiLCJibG9jayIsImluZGV4IiwiYnl0ZSIsInRoaXJkIiwiVWludDhDbGFtcGVkQXJyYXkiLCJqIiwibGluZW5vIiwiY29sbm8iLCJlcnJvciIsIm5hbWUiLCJzdGFjayIsImN1c3RvbSIsIm1lc3NhZ2UiLCJiaXQiLCJzZXQiLCJvZmZzZXQiLCJJbWFnZURhdGEiLCJkcmF3TWVtb3J5IiwibWVtb3J5IiwibWFwIiwibGluZSIsImkiLCJieXRlcyIsImFkZHJlc3MiLCJnZXREYXRhIiwicmVzIiwiZmV0Y2giLCJkYXRhIiwiYXJyYXlCdWZmZXIiLCJjb25zb2xlIiwibG9nIiwiYnl0ZUxlbmd0aCIsIkFycmF5IiwiZnJvbSIsInJlZHVjZSIsImFjYyIsImN1cnIiLCJsZW5ndGgiLCJwdXNoIiwicGFyc2UiLCJsaW5lcyIsInNwbGl0IiwiXyIsInJlcGxhY2UiLCJ0cmltIiwiZmlsdGVyIiwiQm9vbGVhbiIsImNtZCIsInBhcnNlSW50Iiwic3Vic3RyaW5nIiwiZSJdLCJtYXBwaW5ncyI6IkFBQUEsU0FBU0EsY0FBVCxDQUF3QkMsRUFBeEIsRUFBNEJDLEtBQTVCLEVBQW1DQyxPQUFuQyxFQUE0QztBQUMxQyxNQUFJQyxTQUFTLEVBQ1hILElBQUlBLEVBRE8sRUFFWEMsT0FBT0MsV0FBVyxJQUFYLEdBQWtCRSxLQUFLQyxTQUFMLENBQWVILE9BQWYsQ0FBbEIsR0FBNENELEtBRnhDLEVBQWIsQ0FLQSxJQUFJQyxZQUFZ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MUIsZUFBU3lCLFNBQVN6QixRQUFRb0IsT0FBUixDQUFnQixJQUFoQixFQUFzQixFQUF0QixDQUFULEVBQW9DLEVBQXBDLENBREo7QUFFTHJCO0FBRkssS0FBUDtBQUlELEdBYlcsQ0FBZDs7QUFlQSw0QkFBT2tCLEtBQVAsRUExRUYsQ0FBQyxNQUFJO0FBQUMsUUFBSTtBQUFFLGFBQVFBLE1BQU0sQ0FBTixDQUFSO0FBQWtCLEtBQXhCLENBQXlCLE9BQU1VLENBQU4sRUFBUSxDQUFFLENBQUMsT0FBTyxJQUFQO0FBQVksR0FBdEQsR0EwRUUsRUFoQm1CLENBZ0JMO0FBQ2Y7O0FBRUQ7O0FBRUE7QUFDQTFCIiwiZmlsZSI6InVua25vd24iLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBjYW52YXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdjYW52YXMnKTtcbmNvbnN0IGN0eCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpO1xuY29uc3QgdyA9IGNhbnZhcy53aWR0aCA9IDI1NjtcbmNvbnN0IGggPSBjYW52YXMuaGVpZ2h0ID0gMTkyO1xuXG5mdW5jdGlvbiBwdXQoY3R4LCBpbWFnZURhdGEsIHgsIHkpIHtcbiAgY3R4LnB1dEltYWdlRGF0YShpbWFnZURhdGEsIHgsIHkpO1xufVxuXG5mdW5jdGlvbiBibG9jayhpbmRleCwgYnl0ZSkge1xuICBjb25zdCB0aGlyZCA9IGluZGV4ID4+IDExOyAvLyAwLi4yMDQ3LCAyMDQ4Li40MDk1LCA0MDk2Li42MTQzXG4gIGNvbnN0IGltYWdlRGF0YSA9IG5ldyBVaW50OENsYW1wZWRBcnJheSg0ICogOCk7IC8vIDF4OCBwaXhlbCBhcnJheVxuXG4gIGZvciAobGV0IGogPSA3OyBqID49IDA7IGotLSkge1xuICAgIC8vIGRldGVybWluZXMgYml0IGZvciBpLCBiYXNlZCBvbiBNU2JcbiAgICBjb25zdCBiaXQgPSAoYnl0ZSAmICgxIDw8IGopKSA9PT0gMCA/IDAgOiAyNTU7XG4gICAgaW1hZ2VEYXRhLnNldChbYml0LCBiaXQsIGJpdCwgMjU1XSwgKDcgLSBqKSAqIDQpOyAvLyBwbGFjZSB0aGUgYml0cyBmb3J3YXJkXG4gIH1cblxuICBjb25zdCB4ID0gaW5kZXggJSAzMjtcbiAgY29uc3QgeSA9ICgoaW5kZXggPj4gNSkgKiA4KSAlIDY0ICsgdGhpcmQgKiA1NjsgLy8gdGhpcyBpcyB0aGUgeSBjb29yZFxuICBjb25zdCBvZmZzZXQgPSBpbmRleCA+PiA4O1xuXG4gIHB1dChjdHgsIG5ldyBJbWFnZURhdGEoaW1hZ2VEYXRhLCA4LCAxKSwgeCAqIDgsIHkgKyBvZmZzZXQpO1xufVxuXG4vLyAzMiBieXRlcyBvbiAxOTIgcm93c1xuXG5cbmZ1bmN0aW9uIGRyYXdNZW1vcnkobWVtb3J5KSB7XG5cdG1lbW9yeS5tYXAoKGxpbmUsIGkpID0+IHtcbiAgICBsaW5lLmJ5dGVzLm1hcCgoYnl0ZSwgaSkgPT4ge1xuXHRcdFx0YmxvY2soKGxpbmUuYWRkcmVzcyArIGkpIC0gMHg0MDAwLCBieXRlKTtcbiAgICB9KTtcbiAgfSk7XG59XG5cbmFzeW5jIGZ1bmN0aW9uIGdldERhdGEoKSB7XG4gIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKCdodHRwOi8vbG9jYWxob3N0OjUzMTA3L2JhbmRlci1tZW1vcnkudGFwJyk7XG4gIGNvbnN0IGRhdGEgPSBhd2FpdCByZXMuYXJyYXlCdWZmZXIoKTtcbiAgXG4gIGNvbnNvbGUubG9nKCd3b3JrZWQnLCBkYXRhLmJ5dGVMZW5ndGgpXG4gIFxuICBjb25zdCBieXRlcyA9IEFycmF5LmZyb20oZGF0YSkucmVkdWNlKChhY2MsIGN1cnIsIGkpID0+IHtcbiAgICBpZiAoIWFjY1thY2MubGVuZ3RoIC0gMV0uYnl0ZXMpIHtcbiAgICAgIGFjY1thY2MubGVuZ3RoIC0gMV0gPSB7IGJ5dGVzOiBbXSwgYWRkcmVzczogMHg0MDAwICsgaSB9O1xuICAgIH1cbiAgICBcbiAgICBpZiAoaSAlIDggIT09IDApIHtcbiAgICAgIGFjY1thY2MubGVuZ3RoIC0gMV0uYnl0ZXMucHVzaChjdXJyKTtcbiAgICB9XG4gICAgXG4gICAgcmV0dXJuIGFjYztcbiAgfSwgW10pO1xuICBcbiAgZHJhd01lbW9yeShieXRlcyk7XG59XG5cbmZ1bmN0aW9uIHBhcnNlKGRhdGEpIHtcbiAgY29uc3QgbGluZXMgPSBkYXRhXG4gIFx0LnNwbGl0KCdcXG4nKVxuICBcdC5tYXAoXyA9PiBfLnJlcGxhY2UoLzsuKiQvLCAnJykudHJpbSgpKSAvLyByZW1vdmUgY29tbWVudHNcbiAgXHQuZmlsdGVyKEJvb2xlYW4pIC8vIHN0cmlwIGVtcHR5IGxpbmVzXG4gIFx0Lm1hcChsaW5lID0+IHtcbiAgICAgIGNvbnN0IFthZGRyZXNzLCBjbWQsIG1lbW9yeV0gPSBsaW5lLnNwbGl0KC9cXHMrLyk7XG4gICAgICBcbiAgICAgIGNvbnN0IGJ5dGVzID0gbWVtb3J5LnNwbGl0KCcsJykubWFwKF8gPT4gcGFyc2VJbnQoXy5zdWJzdHJpbmcoMSksIDE2KSlcbiAgICAgIFxuICAgICAgcmV0dXJuIHtcbiAgICAgICAgYWRkcmVzczogcGFyc2VJbnQoYWRkcmVzcy5yZXBsYWNlKC9eYi8sICcnKSwgMTYpLCBcbiAgICAgICAgYnl0ZXMsXG4gICAgICB9XG4gICAgfSk7XG4gIFxuICByZXR1cm4gbGluZXM7IC8vPyBsaW5lc1swXVxufVxuXG4vLyBjb25zdCBkYXRhID0gcGFyc2UoZG9jdW1lbnQucXVlcnlTZWxlY3RvcignI21lbW9yeScpLmlubmVyVGV4dC50cmltKCkpO1xuXG4vLyBkcmF3TWVtb3J5KGRhdGEpO1xuZ2V0RGF0YSgpOyJdfQ==
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/source-javascript">const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+const w = canvas.width = 256;
+const h = canvas.height = 192;
+
+function put(ctx, imageData, x, y) {
+  ctx.putImageData(imageData, x, y);
+}
+
+function block(index, byte) {
+  const third = index >> 11; // 0..2047, 2048..4095, 4096..6143
+  const imageData = new Uint8ClampedArray(4 * 8); // 1x8 pixel array
+
+  for (let j = 7; j >= 0; j--) {
+    // determines bit for i, based on MSb
+    const bit = (byte & (1 << j)) === 0 ? 0 : 255;
+    imageData.set([bit, bit, bit, 255], (7 - j) * 4); // place the bits forward
+  }
+
+  const x = index % 32;
+  const y = ((index >> 5) * 8) % 64 + third * 56; // this is the y coord
+  const offset = index >> 8;
+
+  put(ctx, new ImageData(imageData, 8, 1), x * 8, y + offset);
+}
+
+// 32 bytes on 192 rows
+
+
+function drawMemory(memory) {
+	memory.map((line, i) => {
+    line.bytes.map((byte, i) => {
+			block((line.address + i) - 0x4000, byte);
+    });
+  });
+}
+
+async function getData() {
+  const res = await fetch('http://localhost:53107/bander-memory.tap');
+  const data = await res.arrayBuffer();
+  
+  console.log('worked', data.byteLength)
+  
+  const bytes = Array.from(data).reduce((acc, curr, i) => {
+    if (!acc[acc.length - 1].bytes) {
+      acc[acc.length - 1] = { bytes: [], address: 0x4000 + i };
+    }
+    
+    if (i % 8 !== 0) {
+      acc[acc.length - 1].bytes.push(curr);
+    }
+    
+    return acc;
+  }, []);
+  
+  drawMemory(bytes);
+}
+
+function parse(data) {
+  const lines = data
+  	.split('\n')
+  	.map(_ => _.replace(/;.*$/, '').trim()) // remove comments
+  	.filter(Boolean) // strip empty lines
+  	.map(line => {
+      const [address, cmd, memory] = line.split(/\s+/);
+      
+      const bytes = memory.split(',').map(_ => parseInt(_.substring(1), 16))
+      
+      return {
+        address: parseInt(address.replace(/^b/, ''), 16), 
+        bytes,
+      }
+    });
+  
+  return lines; //? lines[0]
+}
+
+// const data = parse(document.querySelector('#memory').innerText.trim());
+
+// drawMemory(data);
+getData();
+</script></body>
+</html>
