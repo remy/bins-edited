@@ -55,7 +55,7 @@ canvas {
   display: block;
   border-radius: 0px;
 
-  transform: scale(2);
+  transform: scale(3);
   image-rendering: pixelated;
 }
 </style>
@@ -63,11 +63,8 @@ canvas {
 <body>
 <pre></pre>
   <canvas></canvas>
-<!--boot js--><script id="jsbin-javascript" defer>// const chars = '▖▗▘▙▚▛▜▝▞▟'.split('');
-
-const canvas = document.querySelector('canvas');
+<!--boot js--><script id="jsbin-javascript" defer>const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-ctx.imageSmoothingEnabled = false;
 
 const width = canvas.width = 256;
 const height = canvas.height = 192;
@@ -232,9 +229,13 @@ ctx.lineWidth = 1;
 const wait = n => new Promise(resolve => setTimeout(resolve, n));
 // const chars = ['one', 'backwardEll', 'ell', 'oneFour', 'oneTwo', 'threeFour', 'twoThree', 'box'];
 
-// const shapes = [`' `, ` '`, `. `, ` .`, `: `, ` :`, `''`, `..`, `:'`, `':`, `.:`, `:.`]; //? 
+let shapes;
 
-const shapes = [`:'`, `.:`, '.']
+shapes = [`' `, ` '`, `. `, ` .`, `: `, ` :`, `''`, `..`, `:'`, `':`, `.:`, `:.`]; //? 
+
+shapes = [`..`, `:`, `::`, `  `]
+
+// const shapes = [`:'`, `:'`, `''`, `':`, ` :`, `.:`, `..`, `:.`]
 
 const write = c => {
   incCol();
@@ -245,19 +246,15 @@ let j = 0;
 
 async function main() {
   // noprotect
-  // for (let i = 0; i < (width * height) / 8 / 8; i++) {
-  //   // write(chars[(j++) % chars.length]); 
-  //   write(shapes[Math.random() * shapes.length | 0]);
-  // await wait(50);
-  // }
   
   return new Promise(resolve => {
     let todo = (width * height) / 8 / 8;
     const pop = () => {
       if (todo) {
         for (let i = 0; i < 32; i++) {
-          // write(shapes[Math.random() * shapes.length | 0]);
-          write(shapes[i % shapes.length]);
+          write(shapes[Math.random() * shapes.length | 0]);
+          j += 1;
+          // write(shapes[(j) % shapes.length]);
 		      todo--;
         }
         requestAnimationFrame(pop);
@@ -272,13 +269,15 @@ async function main() {
 }
 
 async function bigSleep() {
-
   let f = 0;
   while (true) {
     await main();
-    await wait(1000);
-    // f++;
+    await wait(200);
+    f++;
     // j += (f % 2) + 1;
+    // ctx.clearRect(0, 0, width, height);
+    // line = 0;
+    // col = -8;
   }
 }
 
@@ -289,11 +288,8 @@ main();
 
 
 
-<script id="jsbin-source-javascript" type="text/source-javascript">// const chars = '▖▗▘▙▚▛▜▝▞▟'.split('');
-
-const canvas = document.querySelector('canvas');
+<script id="jsbin-source-javascript" type="text/source-javascript">const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-ctx.imageSmoothingEnabled = false;
 
 const width = canvas.width = 256;
 const height = canvas.height = 192;
@@ -458,9 +454,13 @@ ctx.lineWidth = 1;
 const wait = n => new Promise(resolve => setTimeout(resolve, n));
 // const chars = ['one', 'backwardEll', 'ell', 'oneFour', 'oneTwo', 'threeFour', 'twoThree', 'box'];
 
-// const shapes = [`' `, ` '`, `. `, ` .`, `: `, ` :`, `''`, `..`, `:'`, `':`, `.:`, `:.`]; //? 
+let shapes;
 
-const shapes = [`:'`, `.:`, '.']
+shapes = [`' `, ` '`, `. `, ` .`, `: `, ` :`, `''`, `..`, `:'`, `':`, `.:`, `:.`]; //? 
+
+shapes = [`..`, `:`, `::`, `  `]
+
+// const shapes = [`:'`, `:'`, `''`, `':`, ` :`, `.:`, `..`, `:.`]
 
 const write = c => {
   incCol();
@@ -471,19 +471,15 @@ let j = 0;
 
 async function main() {
   // noprotect
-  // for (let i = 0; i < (width * height) / 8 / 8; i++) {
-  //   // write(chars[(j++) % chars.length]); 
-  //   write(shapes[Math.random() * shapes.length | 0]);
-  // await wait(50);
-  // }
   
   return new Promise(resolve => {
     let todo = (width * height) / 8 / 8;
     const pop = () => {
       if (todo) {
         for (let i = 0; i < 32; i++) {
-          // write(shapes[Math.random() * shapes.length | 0]);
-          write(shapes[i % shapes.length]);
+          write(shapes[Math.random() * shapes.length | 0]);
+          j += 1;
+          // write(shapes[(j) % shapes.length]);
 		      todo--;
         }
         requestAnimationFrame(pop);
@@ -498,13 +494,15 @@ async function main() {
 }
 
 async function bigSleep() {
-
   let f = 0;
   while (true) {
     await main();
-    await wait(1000);
-    // f++;
+    await wait(200);
+    f++;
     // j += (f % 2) + 1;
+    // ctx.clearRect(0, 0, width, height);
+    // line = 0;
+    // col = -8;
   }
 }
 
